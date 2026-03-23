@@ -1,0 +1,35 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependencies
+node_modules/
+
+# Build and Temp folders
+dist/
+dist-ssr/
+*.local
+
+# Environment Variables
+# It is extremely important to ignore all variations of .env files to completely prevent leaking database URLs or JWT secrets to Git
+.env
+.env.*
+!.env.example
+
+# Editor directories and files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Application Specific
+# Ignore the backend uploads folder so user-generated images are not tracked in Git
+src/backend/uploads/
