@@ -42,7 +42,7 @@ const upload = multer({
 });
 
 router.post('/', protect, admin, upload.single('image'), (req, res) => {
-  res.json({ url: `/${req.file.path.replace(/\\/g, '/')}` });
+  res.json({ url: `/uploads/${req.file.filename}` });
 });
 
 module.exports = router;
