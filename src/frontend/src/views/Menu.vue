@@ -90,7 +90,7 @@ export default {
     },
     async fetchProducts() {
       try {
-        const { data } = await axios.get("http://localhost:5000/api/products");
+        const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/products`);
         this.products = data;
         this.loading = false;
       } catch (err) {

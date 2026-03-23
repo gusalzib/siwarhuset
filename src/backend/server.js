@@ -1,4 +1,7 @@
-require('dotenv').config();
+const path = require('path');
+const dotenv = require('dotenv');
+const envFile = process.env.NODE_ENV === 'production' ? '.env.production' : '.env.development';
+dotenv.config({ path: path.resolve(__dirname, envFile) });
 const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
@@ -15,7 +18,6 @@ app.use(express.json());
 // Define Routes
 app.get('/api', (req, res) => res.send('Siwar Huset API is running'));
 app.use('/api/auth', require('./routes/authRoutes'));
-const path = require('path');
 
 app.use('/api/products', require('./routes/productRoutes'));
 app.use('/api/orders', require('./routes/orderRoutes'));

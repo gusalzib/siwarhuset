@@ -208,7 +208,7 @@ export default {
     async handleLogin() {
       this.loading = true;
       try {
-        const { data } = await axios.post('http://localhost:5000/api/auth/login', this.loginForm);
+        const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/auth/login`, this.loginForm);
         this.token = data.token;
         localStorage.setItem('adminToken', data.token);
         this.toast.success('Login Successful');
@@ -237,8 +237,8 @@ export default {
             Authorization: `Bearer ${this.token}`
           },
         };
-        const { data } = await axios.post('http://localhost:5000/api/upload', formData, config);
-        this.newProduct.image = `http://localhost:5000${data.url}`;
+        const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/upload`, formData, config);
+        this.newProduct.image = `${import.meta.env.VITE_BASE_URL}${data.url}`;
         this.toast.success('Image Uploaded');
       } catch (error) {
         this.toast.error('Image upload failed');
@@ -247,10 +247,10 @@ export default {
     },
     async fetchAdminData() {
       try {
-        const pRes = await axios.get('http://localhost:5000/api/products');
+        const pRes = await axios.get(`${import.meta.env.VITE_API_URL}/products`);
         this.products = pRes.data;
 
-        const oRes = await axios.get('http://localhost:5000/api/orders', this.getAuthHeaders());
+        const oRes = await axios.get(`${import.meta.env.VITE_API_URL}/orders`, this.getAuthHeaders());
         this.orders = oRes.data;
       } catch (error) {
         this.toast.error('Failed to fetch admin data (or unauthorized).');
@@ -261,7 +261,7 @@ export default {
     },
     async updateOrderStatus(order) {
       try {
-        await axios.put(`http://localhost:5000/api/orders/${order._id}/status`, { status: order.status }, this.getAuthHeaders());
+        await axios.put(`${import.meta.env.VITE_API_URL}/orders/${order._id}/status`, { status: order.status }, this.getAuthHeaders());
         this.toast.success('Order status updated');
         await this.fetchAdminData();
       } catch (error) {
@@ -270,7 +270,7 @@ export default {
     },
     async addProduct() {
       try {
-        await axios.post('http://localhost:5000/api/products', this.newProduct, this.getAuthHeaders());
+        await axios.post(`${import.meta.env.VITE_API_URL}/products`, this.newProduct, this.getAuthHeaders());
         this.toast.success('Product added successfully!');
         this.newProduct = { name: '', price: '', category: 'Pizzas', description: '', image: '' };
         this.fetchAdminData();
@@ -281,7 +281,7 @@ export default {
     async deleteProduct(id) {
       if (!confirm('Are you sure?')) return;
       try {
-        await axios.delete(`http://localhost:5000/api/products/${id}`, this.getAuthHeaders());
+        await axios.delete(`${import.meta.env.VITE_API_URL}/products/${id}`, this.getAuthHeaders());
         this.toast.success('Product deleted');
         this.fetchAdminData();
       } catch (error) {
